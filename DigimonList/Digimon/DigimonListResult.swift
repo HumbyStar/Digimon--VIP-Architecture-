@@ -8,11 +8,11 @@
 import Foundation
 
 
-struct DigimonListResult {
+struct DigimonListResult: Codable {
     let digimon: [Digimon]
     
     enum CodingKeys: String, CodingKey {
-        case digimon
+        case digimon = "content"
     }
     
     //O let container serve para decodificar valores associados a chaves do tipo CodingKeys, o CodingKeys ta agindo como uma enumeração para listar todas as chaves que o dado pode ter. Se tudo der certo ele será inicializado senão irá falhar.

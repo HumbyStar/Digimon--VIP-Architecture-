@@ -10,6 +10,13 @@ import Foundation
 struct URLs {
     
     struct Custom {
+        
+        enum NumberLoad {
+            case fifty
+            case twenty
+            case ten
+        }
+        
         enum Endpoints {
             case digimon
             case attribute
@@ -19,8 +26,15 @@ struct URLs {
             case skill
             
             var url: URL {
-                URL(string: "digi-api.com/api/v1\(Custom.getURL(endpoint: self))")!
+                URL(string: "\(URLs.Custom.Endpoints.basePath)\(Custom.getURL(endpoint: self))\(Custom.getTotalDigimons(numberLoad: .fifty))")!
             }
+            
+            func checkPage(urlPage: String = "&page=", indexPath: Int = 0) -> URL {
+                let finalString = "\(URLs.Custom.Endpoints.digimon.url)\(urlPage)\(indexPath)"
+                return URL(string: finalString)!
+            }
+            
+            static var basePath = "https://digi-api.com/api/v1"
         }
        
         static func getURL(endpoint: Endpoints) -> String {
@@ -39,7 +53,20 @@ struct URLs {
                 return "/type"
             }
         }
+        
+        static func getTotalDigimons(numberLoad: NumberLoad) -> String {
+            switch numberLoad {
+            case .fifty:
+                return "?pageSize=\(50)"
+            case .twenty:
+                return "?pageSize=\(20)"
+            case .ten:
+                return "?pageSize=\(10)"
+            }
+        }
     }
     
     
 }
+
+
